@@ -13,15 +13,16 @@ export const PopularMovie = () => {
         "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289"
       );
 
-      setPopular(data);
+      setPopular(data.results);
     } catch (err: any) {
       console.log(err.message);
     }
-    useEffect(() => {
-      FunctionName();
-    });
+  
   };
-
+  useEffect(() => {
+    FunctionName()
+    ;
+  },[]);
   return (
     <div className="flex flex-col gap-[32px] px-[80px]">
       <div className="flex items-center justify-between ">
@@ -32,13 +33,13 @@ export const PopularMovie = () => {
         </Button>
       </div>
       <div className="grid grid-cols-5 gap-[32px] w-full">
-        {popular?.map((value: any, index: number) => {
+        {popular?.slice(0,10).map((value: any, index: number) => {
           return (
             <Card
               key={index}
-              image={value.backdrop_path}
+              image={`https://image.tmdb.org/t/p/w300/${value.poster_path}` }
               rate={value.vote_average}
-              title={value.overview}
+              title={value.title}
             />
           );
         })}
